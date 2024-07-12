@@ -11,13 +11,16 @@
 
 namespace JoliCode\Elastically\Messenger;
 
+use App\Core\Infrastructure\Elastic\Article\ArticleDTO as ArticleDTO;
+
 final class IndexationRequest implements IndexationRequestInterface
 {
     private string $className;
     private string $id;
+    private ArticleDTO $articleDTO;
     private string $operation;
 
-    public function __construct(string $className, string $id, string $operation = IndexationRequestHandler::OP_INDEX)
+    public function __construct(string $className, string $id, ArticleDTO $articleDTO, $operation = IndexationRequestHandler::OP_INDEX)
     {
         if (!\in_array($operation, IndexationRequestHandler::OPERATIONS, true)) {
             throw new \InvalidArgumentException(sprintf('Not supported operation "%s" given.', $operation));
@@ -25,6 +28,7 @@ final class IndexationRequest implements IndexationRequestInterface
 
         $this->className = $className;
         $this->id = $id;
+        $this->articleDTO = $articleDTO;
         $this->operation = $operation;
     }
 
@@ -41,5 +45,10 @@ final class IndexationRequest implements IndexationRequestInterface
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getArticleDTO(): ArticleDTO
+    {
+        return $this->articleDTO;
     }
 }

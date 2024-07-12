@@ -130,7 +130,7 @@ class IndexationRequestHandler
             return;
         }
 
-        $document = $this->exchanger->fetchDocument($indexationRequest->getClassName(), $indexationRequest->getId());
+        $document = $this->exchanger->fetchDocument($indexationRequest->getClassName(), $indexationRequest->getId(), $indexationRequest->getArticleDTO());
 
         if (!$document) {
             // ID does not exists, delete
